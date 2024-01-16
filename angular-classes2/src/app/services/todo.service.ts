@@ -1,21 +1,22 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { ITodo, TTodoCreateFormData } from '../interfaces/todo.interface';
 
 @Injectable({ providedIn: 'root' })
 export class TodoService {
-    private todoList: ITodo[] = [];
+  readonly todoList = signal<ITodo[]>([]);
 
-    getTodoList(){
-        return this.todoList;
-    }
+  getTodoList() {
+    return this.todoList();
+  }
 
-    addTodo(formData: TTodoCreateFormData){
-        const newTodo = { ...formData, id: crypto.randomUUID() };
-        this.todoList.push(newTodo);
-    }
+  addTodo(formData: TTodoCreateFormData) {
+    const newTodo = { ...formData, id: crypto.randomUUID() };
+    this.todoList.update((todoList) => [...todoList, newTodo]);
+  }
 
-    removeTodo(removingId: string){
-        const index = this.todoList.findIndex(todo => todo.id === removingId);
-        this.todoList.splice(index, 1);
-    }
+  removeTodo(removingId: string) {
+    this.todoList.update((todoList) =>
+      todoList.filter((todo) => todo.id !== removingId)
+    );
+  }
 }
