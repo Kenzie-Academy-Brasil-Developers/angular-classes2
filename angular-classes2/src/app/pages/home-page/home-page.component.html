@@ -1,1 +1,8 @@
-<p>home-page works!</p>
+<main>
+    <h1>Lista de notas</h1>
+    <app-todo-create-form></app-todo-create-form>
+    <ul *ngIf="todoList.length > 0">
+        <app-todo-card *ngFor="let todo of todoList" [todo]="todo"></app-todo-card>
+    </ul>
+    <p *ngIf="todoList.length === 0">Cadastre a sua primeira nota</p>
+</main>

@@ -1,4 +1,4 @@
-<form>
+<form (submit)="onSubmit($event)">
     <input type="text" placeholder="Título" [formControl]="title">
     <textarea placeholder="Mensagem" [formControl]="content"></textarea>
     <button type="submit">Cadastrar nota</button>
